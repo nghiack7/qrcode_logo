@@ -46,6 +46,9 @@
                             <img id="qrcode" style="height: 100%;width: 100%; object-fit: contain;" src:"">
                         </div>
                     </div>
+                    <div class="control">
+                        <button id="downloadButton" class="button is-link">Download QR Code</button>
+                    </div>
                 </div>
 
             </div>
@@ -77,11 +80,23 @@
                             $("#qrcode").attr("src",baseURL+"app/qr_codes/"+res.result.fname);
                         }
                     });
+                  
                 });
+                $("#downloadButton").click(function(){
+                    var qrCodeSrc = $("#qrcode").attr("src");
+                    var fileName = qrCodeSrc.split("/").pop(); // Extract the filename from the URL
+        
+                    var a = document.createElement('a');
+                    a.href = qrCodeSrc;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    });
                 $("#logo").change(function(){
                     openLogoFile();
                 });
-            });f
+            });
             function openLogoFile(){
                 const preview = document.querySelector("#imgLogo");
                 const file =document.querySelector("input[type=file]").files[0];
